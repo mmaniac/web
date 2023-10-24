@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://dl.clockworkpi.com/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+	<title>ClockworkPi Disks Collection</title>
+</head>
+
+<body>
+
+	<style type="text/css">
+		body {
+			overflow: hidden;
+			overflow-y: hidden;
+			background-color: #beb8ac;
+		}
+		.disk{
+			position: absolute;
+			cursor: url("hand.png"),auto;
+			z-Index: 0;
+			height: 80%;
+		}
+		.dl_url{
+			font-size: 24px;
+			font-family: monospace;
+			color: #fff;
+			text-decoration: none;
+		}
+		.mesg{
+			width: 100%;
+			text-align: center;
+			position: absolute;
+  			bottom: 5%;
+		}
+	</style>
+
+	<div class="mesg">
+		<a href="http://dl.clockworkpi.com/DevTerm_CM4_v0.1.img.bz2" id="info" class="dl_url">http://dl.clockworkpi.com/DevTerm_CM4_v0.1.img.bz2</a>
+	</div>
+
+	<img src="./ClockworkPi Disks Collection_files/Disk_GS.svg" id="d00" class="disk" alt="http://dl.clockworkpi.com/clockworkos_v0.5.img.bz2" style="transform: rotate(1.41609deg); left: 70px; top: 8px; position: absolute; z-index: 10;">
+	<img src="./ClockworkPi Disks Collection_files/Disk_CM3.svg" id="d01" class="disk" alt="http://dl.clockworkpi.com/DevTerm_CM3_v0.1a.img.bz2" style="transform: rotate(0.815713deg); left: 308px; top: 35px; position: absolute; z-index: 11;">
+	<img src="./ClockworkPi Disks Collection_files/Disk_A06.svg" id="d02" class="disk" alt="http://dl.clockworkpi.com/DevTerm_A06_v0.2h.img.bz2" style="transform: rotate(-1.8715deg); left: 28px; top: 3px; position: absolute; z-index: 12;">
+	<img src="./ClockworkPi Disks Collection_files/Disk_A04.svg" id="d03" class="disk" alt="http://dl.clockworkpi.com/DevTerm_A04_v0.2h.img.bz2" style="transform: rotate(0.715068deg); left: 243px; top: 15px; position: absolute; z-index: 13;">
+	<img src="./ClockworkPi Disks Collection_files/Disk_R01.svg" id="d04" class="disk" alt="http://dl.clockworkpi.com/DevTerm_R01_v0.2a.img.bz2" style="transform: rotate(1.29065deg); left: 97px; top: 3px; position: absolute; z-index: 14;">
+	<img src="./ClockworkPi Disks Collection_files/Disk_CM4.svg" id="d05" class="disk" alt="http://dl.clockworkpi.com/DevTerm_CM4_v0.1.img.bz2" style="transform: rotate(-1.75576deg); left: 472px; top: 31px; position: absolute; z-index: 15;">
+	<img src="./ClockworkPi Disks Collection_files/Disk_CM4_64bit.svg" id="d06" class="disk" alt="http://dl.clockworkpi.com/DevTerm_CM4_v0.1a_64bit.img.bz2" style="transform: rotate(-1.22008deg); left: 322px; top: 66px; position: absolute; z-index: 17;">
+
+<script type="text/javascript">
+
+	var offset = [0,0];
+	var isDown = false;
+	var target, info = document.getElementById("info");
+
+	initDisks();
+
+	function initDisks()
+	{
+		var i = 0;
+		for (let img of document.getElementsByTagName("img")) {
+			i = i + 10;
+			img.setAttribute("style", "transform: rotate(" + (2 - Math.random()*4) + "deg)");
+			img.style.left = (i*3 + 60) + "px";
+			img.style.top = (i + 10) + "px";
+		}
+	}
+
+	function findHighestZIndex(elem)
+	{
+		var elems = document.getElementsByTagName(elem);
+		var highest = Number.MIN_SAFE_INTEGER || -(Math.pow(2, 53) - 1);
+		for (var i = 0; i < elems.length; i++) {
+			var zindex = Number.parseInt(document.defaultView.getComputedStyle(elems[i], null).getPropertyValue("z-index"), 10);
+			if (zindex > highest) {
+				highest = zindex;
+			}
+		}
+		return highest;
+	}
+
+	document.body.addEventListener('mousedown', function(event) {
+		if(event.target.nodeName=="IMG") {
+			target = document.getElementById(event.target.id);
+			target.style.position = "absolute";
+			isDown = true;
+			target.style.zIndex = findHighestZIndex('img') + 1;
+			offset = [target.offsetLeft - event.clientX, target.offsetTop - event.clientY];
+		}
+	}, true);
+
+	document.body.addEventListener('mouseup', function(event) {
+		isDown = false;
+	}, true);
+
+	document.body.addEventListener('mouseleave', function(event) {
+		isDown = false;
+	}, true);
+
+	document.body.addEventListener('mouseover', function(event) {
+		if(event.target) {
+			target = document.getElementById(event.target.id);
+			if (target.alt) {
+				info.innerText = target.alt;
+				info.href = target.alt;
+			}
+		}
+	}, true);
+
+	document.body.addEventListener('mousemove', function(event) {
+		event.preventDefault();
+		if (isDown) {
+			mousePosition = {x : event.clientX,	y : event.clientY};
+			target.style.left = (mousePosition.x + offset[0]) + 'px';
+			target.style.top  = (mousePosition.y + offset[1]) + 'px';
+		}
+	}, true);
+
+</script>
+
+
+</body></html>
